@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.mapper.UniversityMapper">
+
+    <resultMap type="University" id="UniversityMapper">
+		<id column="university_id" property="universityId"/>
+		<result column="university_name" property="universityName"/>
+		<result column="university_grade" property="universityGrade"/>
+		<result column="university_type" property="universityType"/>
+	</resultMap>
+    
+    <select id="selectAllUniversity" resultMap="UniversityMapper">
+        select * from university
+    </select>
+    
+    <select id="selectOneUniversity" resultMap="UniversityMapper">
+        select * from university 
+        	where university_id=#{university_id}
+    </select>
+    
+    <delete id="deleteUniversityById" parameterType="University">
+        delete from university where university_id=#{university_id}
+    </delete>
+    
+    <update id="updateUniversityById" parameterType="University">
+        update university set university_name=#{universityName}
+        	,university_grade=#{universityGrade}
+        	,university_type=#{universityType} 
+        	where university_id=#{universityId}
+    </update>
+    
+    <insert id="insertUniversity" parameterType="University">
+    	insert into university(university_name, university_grade, university_type)
+    		values(#{universityName}, #{universityGrade}, #{universityType})
+    </insert>
+    
+</mapper>

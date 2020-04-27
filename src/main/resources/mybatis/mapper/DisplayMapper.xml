@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.mapper.DisplayMapper">
+        <resultMap id="displayTeacherResult" type="nuc.edu.cn.pojo.Teacher">
+               <id column="teacher_id" property="teacherId"/>
+               <result column="teacher_name" property="teacherName"/>
+               <result column="university_id" property="universityId"/>
+               <result column="department_id" property="departmentId"/>
+               <result column="email" property="email"/>
+               <result column="phone_num" property="phoneNum"/>
+               <result column="teacher_grade" property="teacherGrade"/>
+               <result column="password" property="password"/>
+        </resultMap>
+        <!-- 显示个人信息 -->
+        <select id="displayTeacher" parameterType="nuc.edu.cn.pojo.Teacher" resultMap="displayTeacherResult">
+              select * from teacher where teacher_id=#{teacherId}
+        </select>
+        <resultMap id="displayPaperResult" type="nuc.edu.cn.pojo.TeacherAndPaper">
+                 <id column="id" property="id"/>
+                 <result column="teacherid" property="teacherId"/>
+                 <result column="paperid" property="paperId"/>
+                <association property="paper" javaType="nuc.edu.cn.pojo.Paper">
+                 <id column="paper_id" property="paperId"/>
+                 <result column="paper_name" property="paperName"/>
+                 <result column="country" property="country"/>
+               </association>
+        </resultMap>
+        <!-- 显示文献和教师验证信息 -->
+        <select id="displayPaper" resultMap="displayPaperResult">
+             select teacherandpaper.*,paper.paper_name,paper.country from teacherandpaper,paper
+                where paper.paper_id=teacherandpaper.paperid
+        </select>
+
+        <select id="universityShow" resultType="University">
+                select * from university
+        </select>
+       <!-- 首页显示文献信息 -->
+       <select id="paperShow" resultMap="paperShowResult">
+                select * from paper  
+       </select>
+       <!-- 首页显示完整信息 -->
+       <select id="largeShow" resultType="nuc.edu.cn.pojo.Connection">
+              select university.university_name,department.department_name,teacher.teacher_id,teacher.teacher_name,paper.paper_id,paper.paper_name,paper.country
+              from university,department,teacher,teacherandpaper,paper where university.university_id=department.university_id and department.department_id=
+              teacher.department_id and teacher.teacher_id=teacherandpaper.teacherid and teacherandpaper.paperid=paper.paper_id
+       </select>
+       <resultMap id="paperShowResult" type="nuc.edu.cn.pojo.Paper">
+               <id column="paper_id" property="paperId"/>
+               <result column="paper_name" property="paperName"/>
+               <result column="language" property="language"/>
+               <result column="subject_class_id" property="subjectClassId"/>
+               <result column="project_source_id" property="projectSourceId"/>
+               <result column="project_id" property="projectId"/>
+               <result column="research_type" property="researchType"/>
+               <result column="magazine_name" property="magazineName"/>
+               <result column="magazine_grade" property="magazineGrade"/>
+               <result column="country" property="country"/>
+       </resultMap>
+       <!-- 首页模糊查询 -->
+       <select id="inquirePaper" parameterType="String" resultMap="paperShowResult">
+              select * from paper where paper_name like '${value}%'
+       </select>
+       <!-- 首页文献数量显示 -->
+       <select id="countShow" resultType="int">
+               select count(*) from paper
+       </select>
+</mapper>

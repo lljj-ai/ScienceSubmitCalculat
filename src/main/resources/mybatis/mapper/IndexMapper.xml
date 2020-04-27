@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.mapper.IndexMapper">
+        <resultMap id="selectTeacherResult" type="nuc.edu.cn.pojo.Teacher">
+               <id column="teacher_id" property="teacherId"/>
+               <result column="teacher_name" property="teacherName"/>
+               <result column="university_id" property="universityId"/>
+               <result column="department_id" property="departmentId"/>
+               <result column="email" property="email"/>
+               <result column="phone_num" property="phoneNum"/>
+               <result column="teacher_grade" property="teacherGrade"/>
+               <result column="password" property="password"/>
+        </resultMap>
+        <select id="selectTeacher" parameterType="nuc.edu.cn.pojo.Teacher" resultMap="selectTeacherResult">
+               select * from teacher where teacher_id=#{teacherId} and password=#{password};
+        </select>
+        
+        
+        <resultMap id="selectManagerResult" type="nuc.edu.cn.pojo.Manager">
+               <id column="manager_id" property="managerId"/>
+               <result column="manager_name" property="managerName"/>
+               <result column="email" property="email"/>
+               <result column="phone_num" property="phoneNum"/>
+               <result column="password" property="password"/>
+        </resultMap>
+        <select id="selectManager" parameterType="nuc.edu.cn.pojo.Manager" resultMap="selectManagerResult">
+               select * from manager where manager_id=#{managerId} and password=#{password};
+        </select>
+</mapper>

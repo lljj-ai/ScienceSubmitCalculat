@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.mapper.PaperMapper">
+    
+    
+    <resultMap type="Paper" id="paperMapper">
+		<id column="paper_id" property="paperId"/>
+		<result column="paper_name" property="paperName"/>
+		<result column="language" property="language"/>
+		<result column="subject_class_id" property="subjectClassId"/>
+		<result column="project_source_id" property="projectSourceId"/>
+		<result column="projectid" property="projectId"/>
+		<result column="research_type" property="researchType"/>
+		<result column="magazine_name" property="magazineName"/>
+		<result column="magazine_grade" property="magazineGrade"/>
+		<result column="country" property="country"/>
+	</resultMap>
+    <select id="selectAllPaper" resultMap="paperMapper">
+        select * from paper
+    </select>
+    
+    <select id="selectOnePaper" resultMap="paperMapper">
+        select * from paper where paper_id=#{paperId}
+    </select>
+    
+    
+    <delete id="deletePaperById" parameterType="Integer">
+        delete from paper where paper_id=#{paperId}
+    </delete>
+  
+</mapper>

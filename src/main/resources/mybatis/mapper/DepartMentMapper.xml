@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.cn.mapper.DepartmentMapper">
+
+     <resultMap type="Department" id="DepartMapper">
+		<id column="department_id" property="departmentId"/>
+		<result column="department_name" property="departmentName"/>
+		<result column="department_type" property="departmentType"/>
+		<result column="university_name" property="universityName"/>
+	</resultMap>
+    <select id="selectAllDepartment" resultMap="DepartMapper">
+        select department_id,department_name,department_type,university_name
+         from department,university where university.university_id=department.university_id
+    </select>
+    
+    <select id="selectOneDepartment" resultMap="DepartMapper">
+        select * from department, university 
+        	where university.university_id=department.university_id 
+        	and department_id=#{department_id}
+    </select>
+    
+    <delete id="deleteDepartmentById" parameterType="Department">
+        delete from department where department_id=#{department_id}
+    </delete>
+    
+    <update id="updateDepartmentById" parameterType="Department">
+        update department set department_name=#{departmentName}
+        	,department_type=#{departmentType}
+        	,university_id=#{universityId} 
+        	where department_id=#{departmentId}
+    </update>
+    
+    <insert id="insertDepartment" parameterType="Department">
+    	insert into department(department_name, department_type, university_id)
+    		values(#{departmentName}, #{departmentType}, #{universityId})
+    </insert>
+    
+</mapper>
